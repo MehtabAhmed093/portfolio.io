@@ -1,521 +1,394 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Mehtab Ahmed | Cybersecurity Analyst</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>Mehtab Ahmed | Cybersecurity Analyst</title>
+  <!-- Tailwind via CDN + critical style overrides -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Three.js & Vanta (network bg) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+  <!-- Typewriter -->
+  <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
 
-<style>
-:root {
-  --ink: #0b0f19;
-  --surface: #111827;
-  --surface2: #1a2235;
-  --border: rgba(99,179,237,0.15);
-  --accent: #38bdf8;
-  --accent2: #818cf8;
-  --accent3: #34d399;
-  --warn: #fb923c;
-  --text: #e2e8f0;
-  --muted: #64748b;
-  --card-bg: rgba(17,24,39,0.85);
-}
+  <style>
+    /* ----- root & reset ----- */
+    :root {
+      --ink: #0b0f19;
+      --surface: #111827;
+      --surface2: #1a2235;
+      --border: rgba(99,179,237,0.15);
+      --accent: #38bdf8;
+      --accent2: #818cf8;
+      --accent3: #34d399;
+      --warn: #fb923c;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --card-bg: rgba(17,24,39,0.85);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--ink);
+      color: var(--text);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    /* scanline overlay – subtle */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.02) 2px, rgba(0,0,0,0.02) 4px);
+      pointer-events: none;
+      z-index: 9999;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .display { font-family: 'Syne', sans-serif; }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+    /* ----- navigation ----- */
+    #navbar {
+      position: fixed; top: 0; width: 100%; z-index: 1000;
+      background: rgba(11,15,25,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 1.5rem;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      cursor: pointer;
+      text-decoration: none;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .nav-links { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+    .nav-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      padding: 0.45rem 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+      text-transform: uppercase;
+      background: transparent;
+      white-space: nowrap;
+    }
+    .nav-btn:hover { color: var(--accent); background: rgba(56,189,248,0.07); }
+    .nav-btn.active { color: var(--accent); border-color: rgba(56,189,248,0.25); background: rgba(56,189,248,0.08); }
 
-body {
-  font-family: 'Space Grotesk', sans-serif;
-  background: var(--ink);
-  color: var(--text);
-  overflow-x: hidden;
-}
+    .hamburger { display: none; font-size: 1.4rem; color: var(--accent); cursor: pointer; background: none; border: none; padding: 0.25rem; }
+    #mobile-menu {
+      display: none;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1.5rem;
+      flex-direction: column; gap: 0.4rem;
+    }
+    #mobile-menu .nav-btn { text-align: center; width: 100%; }
 
-/* ── SCANLINE OVERLAY ─────────────────── */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
-  pointer-events: none;
-  z-index: 9999;
-}
+    /* ----- sections ----- */
+    .section {
+      display: none;
+      min-height: 100vh;
+      padding-top: 80px;
+      padding-bottom: 60px;
+    }
+    .section.active { display: block; animation: fadeUp 0.45s ease forwards; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
-.mono { font-family: 'JetBrains Mono', monospace; }
-.display { font-family: 'Syne', sans-serif; }
+    /* ----- helpers ----- */
+    .grad { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .grad2 { background: linear-gradient(135deg, var(--accent3), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .glow-border { box-shadow: 0 0 0 1px rgba(56,189,248,0.2), 0 0 24px rgba(56,189,248,0.06); }
+    .badge {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      background: rgba(56,189,248,0.08);
+      border: 1px solid rgba(56,189,248,0.2);
+      color: var(--accent);
+    }
+    .badge-green { background: rgba(52,211,153,0.08); border-color: rgba(52,211,153,0.25); color: var(--accent3); }
+    .badge-purple { background: rgba(129,140,248,0.08); border-color: rgba(129,140,248,0.25); color: var(--accent2); }
+    .badge-orange { background: rgba(251,146,60,0.08); border-color: rgba(251,146,60,0.25); color: var(--warn); }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      transition: all 0.25s ease;
+    }
+    .card:hover {
+      border-color: rgba(56,189,248,0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.7rem 1.6rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff; font-weight: 600; font-size: 0.9rem;
+      border-radius: 8px; border: none; cursor: pointer;
+      transition: all 0.25s;
+      text-decoration: none;
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(56,189,248,0.3); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.7rem 1.6rem;
+      background: transparent;
+      color: var(--accent); font-weight: 600; font-size: 0.9rem;
+      border-radius: 8px; border: 1px solid rgba(56,189,248,0.4); cursor: pointer;
+      transition: all 0.25s;
+      text-decoration: none;
+    }
+    .btn-outline:hover { background: rgba(56,189,248,0.08); transform: translateY(-2px); }
+    .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 2rem 0; }
 
-/* ── NOISE TEXTURE ───────────────────── */
-.noise {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-}
+    /* skill bars */
+    .skill-track { height: 5px; background: rgba(255,255,255,0.07); border-radius: 99px; overflow: hidden; margin-top: 6px; }
+    .skill-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--accent), var(--accent2)); width: 0; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
+    .skill-fill.green { background: linear-gradient(90deg, var(--accent3), var(--accent)); }
+    .skill-fill.orange { background: linear-gradient(90deg, var(--warn), #f59e0b); }
 
-/* ── NAVIGATION ──────────────────────── */
-#navbar {
-  position: fixed; top: 0; width: 100%; z-index: 1000;
-  background: rgba(11,15,25,0.92);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  transition: all 0.3s;
-}
-.nav-inner {
-  max-width: 1200px; margin: 0 auto;
-  padding: 0 2rem;
-  height: 64px;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.nav-logo {
-  font-family: 'Syne', sans-serif;
-  font-size: 1.1rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  color: var(--accent);
-  cursor: pointer;
-  text-decoration: none;
-}
-.nav-links { display: flex; gap: 0.25rem; }
-.nav-btn {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: var(--muted);
-  padding: 0.5rem 0.85rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: 1px solid transparent;
-  text-transform: uppercase;
-}
-.nav-btn:hover { color: var(--accent); background: rgba(56,189,248,0.07); }
-.nav-btn.active { color: var(--accent); border-color: rgba(56,189,248,0.25); background: rgba(56,189,248,0.08); }
+    /* terminal */
+    .terminal { background: #0d1117; border: 1px solid rgba(52,211,153,0.25); border-radius: 10px; overflow: hidden; font-family: 'JetBrains Mono', monospace; }
+    .terminal-bar { background: rgba(52,211,153,0.06); padding: 8px 14px; border-bottom: 1px solid rgba(52,211,153,0.15); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .dot { width: 11px; height: 11px; border-radius: 50%; }
+    .dot-r { background: #ff5f57; }
+    .dot-y { background: #febc2e; }
+    .dot-g { background: #28c840; }
+    .t-path { font-size: 0.7rem; color: var(--accent3); margin-left: 6px; }
+    .terminal-body { padding: 1rem 1.25rem; font-size: 0.78rem; line-height: 2; }
+    .t-prompt { color: var(--accent3); }
+    .t-cmd { color: #e2e8f0; }
+    .t-key { color: var(--accent); }
+    .t-val { color: #e2e8f0; }
+    .t-blink { animation: blink 1.1s step-end infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-.hamburger { display: none; font-size: 1.4rem; color: var(--accent); cursor: pointer; }
-#mobile-menu {
-  display: none;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  padding: 1rem 2rem;
-  flex-direction: column; gap: 0.5rem;
-}
-#mobile-menu .nav-btn { text-align: center; }
+    /* poc card */
+    .poc-card {
+      background: linear-gradient(135deg, rgba(56,189,248,0.06), rgba(129,140,248,0.06));
+      border: 1px solid rgba(56,189,248,0.3);
+      border-radius: 12px;
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .poc-card::before {
+      content: 'POC';
+      position: absolute; top: 12px; right: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem; letter-spacing: 0.15em;
+      color: var(--accent); background: rgba(56,189,248,0.1);
+      padding: 2px 8px; border-radius: 4px;
+      border: 1px solid rgba(56,189,248,0.2);
+    }
 
-/* ── MAIN SECTIONS ───────────────────── */
-.section {
-  display: none;
-  min-height: 100vh;
-  padding-top: 84px;
-  padding-bottom: 60px;
-}
-.section.active { display: block; animation: fadeUp 0.5s ease forwards; }
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
+    /* exp tabs */
+    .exp-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .exp-tab {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.05em;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      color: var(--muted); cursor: pointer;
+      background: transparent;
+      transition: all 0.2s;
+    }
+    .exp-tab:hover, .exp-tab.active {
+      color: var(--accent);
+      border-color: rgba(56,189,248,0.35);
+      background: rgba(56,189,248,0.07);
+    }
+    .exp-panel { display: none; animation: fadeUp 0.4s ease; }
+    .exp-panel.active { display: block; }
 
-.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    /* stats removed — replaced with clean spacing */
+    .stat-pill { display: none; } /* hidden — no stats */
 
-/* ── SECTION HEADERS ─────────────────── */
-.section-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  color: var(--accent);
-  text-transform: uppercase;
-  margin-bottom: 0.6rem;
-}
-.section-title {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 800;
-  color: #fff;
-  margin-bottom: 1rem;
-  line-height: 1.1;
-}
-.section-sub {
-  color: var(--muted);
-  max-width: 560px;
-  line-height: 1.7;
-  font-size: 0.95rem;
-}
+    /* responsive */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: block; }
+      #mobile-menu { display: flex; }
+      #mobile-menu.hidden { display: none; }
+      .section { padding-top: 74px; padding-bottom: 40px; }
+      .container { padding: 0 1rem; }
+      .nav-inner { padding: 0 1rem; }
+    }
+    @media (min-width: 769px) {
+      #mobile-menu { display: none !important; }
+    }
+    /* Fix for very small screens */
+    @media (max-width: 420px) {
+      .btn-primary, .btn-outline { font-size: 0.8rem; padding: 0.6rem 1.2rem; }
+      .terminal-body { font-size: 0.7rem; padding: 0.8rem 1rem; }
+    }
 
-/* ── GLOW UTILS ──────────────────────── */
-.glow-blue { text-shadow: 0 0 20px rgba(56,189,248,0.5); }
-.glow-border { box-shadow: 0 0 0 1px rgba(56,189,248,0.2), 0 0 24px rgba(56,189,248,0.06); }
+    /* vanta bg */
+    #vanta-bg { position: fixed; inset: 0; z-index: -1; }
 
-/* ── GRADIENT TEXT ───────────────────── */
-.grad {
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
-.grad2 {
-  background: linear-gradient(135deg, var(--accent3), var(--accent));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
+    /* scroll indicator */
+    .scroll-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent);
+      animation: scrollBounce 1.8s ease-in-out infinite;
+    }
+    @keyframes scrollBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
 
-/* ── CARDS ───────────────────────────── */
-.card {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  transition: all 0.3s ease;
-}
-.card:hover {
-  border-color: rgba(56,189,248,0.4);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(56,189,248,0.15);
-}
-
-/* ── BADGES ──────────────────────────── */
-.badge {
-  display: inline-block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  padding: 0.25rem 0.65rem;
-  border-radius: 4px;
-  background: rgba(56,189,248,0.08);
-  border: 1px solid rgba(56,189,248,0.2);
-  color: var(--accent);
-}
-.badge-green { background: rgba(52,211,153,0.08); border-color: rgba(52,211,153,0.25); color: var(--accent3); }
-.badge-purple { background: rgba(129,140,248,0.08); border-color: rgba(129,140,248,0.25); color: var(--accent2); }
-.badge-orange { background: rgba(251,146,60,0.08); border-color: rgba(251,146,60,0.25); color: var(--warn); }
-
-/* ── BUTTONS ─────────────────────────── */
-.btn-primary {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  padding: 0.75rem 1.75rem;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #fff; font-weight: 600; font-size: 0.9rem;
-  border-radius: 8px; border: none; cursor: pointer;
-  transition: all 0.3s;
-  text-decoration: none;
-}
-.btn-primary:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(56,189,248,0.3); }
-
-.btn-outline {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  padding: 0.75rem 1.75rem;
-  background: transparent;
-  color: var(--accent); font-weight: 600; font-size: 0.9rem;
-  border-radius: 8px; border: 1px solid rgba(56,189,248,0.4); cursor: pointer;
-  transition: all 0.3s;
-  text-decoration: none;
-}
-.btn-outline:hover { background: rgba(56,189,248,0.08); transform: translateY(-2px); }
-
-/* ── SKILL BARS ──────────────────────── */
-.skill-track {
-  height: 5px; background: rgba(255,255,255,0.07);
-  border-radius: 99px; overflow: hidden; margin-top: 6px;
-}
-.skill-fill {
-  height: 100%; border-radius: 99px;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
-  width: 0; transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
-}
-.skill-fill.green { background: linear-gradient(90deg, var(--accent3), var(--accent)); }
-.skill-fill.orange { background: linear-gradient(90deg, var(--warn), #f59e0b); }
-
-/* ── TERMINAL ────────────────────────── */
-.terminal {
-  background: #0d1117;
-  border: 1px solid rgba(52,211,153,0.25);
-  border-radius: 10px;
-  overflow: hidden;
-  font-family: 'JetBrains Mono', monospace;
-}
-.terminal-bar {
-  background: rgba(52,211,153,0.06);
-  padding: 10px 14px;
-  border-bottom: 1px solid rgba(52,211,153,0.15);
-  display: flex; align-items: center; gap: 6px;
-}
-.dot { width: 11px; height: 11px; border-radius: 50%; }
-.dot-r { background: #ff5f57; }
-.dot-y { background: #febc2e; }
-.dot-g { background: #28c840; }
-.t-path { font-size: 0.72rem; color: var(--accent3); margin-left: 8px; }
-.terminal-body { padding: 1.25rem 1.5rem; font-size: 0.8rem; line-height: 2; }
-.t-prompt { color: var(--accent3); }
-.t-cmd { color: #e2e8f0; }
-.t-key { color: var(--accent); }
-.t-val { color: #e2e8f0; }
-.t-comment { color: var(--muted); }
-.t-blink { animation: blink 1.1s step-end infinite; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-
-/* ── TIMELINE ────────────────────────── */
-.timeline-line {
-  position: absolute; left: 0; top: 0; bottom: 0;
-  width: 2px; background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
-}
-.timeline-dot {
-  position: absolute; left: -5px; top: 24px;
-  width: 12px; height: 12px; border-radius: 50%;
-  background: var(--accent); border: 2px solid var(--ink);
-  box-shadow: 0 0 8px var(--accent);
-}
-
-/* ── POC HIGHLIGHT ───────────────────── */
-.poc-card {
-  background: linear-gradient(135deg, rgba(56,189,248,0.06), rgba(129,140,248,0.06));
-  border: 1px solid rgba(56,189,248,0.3);
-  border-radius: 12px;
-  padding: 1.5rem;
-  position: relative;
-  overflow: hidden;
-}
-.poc-card::before {
-  content: 'POC';
-  position: absolute; top: 12px; right: 14px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem; letter-spacing: 0.15em;
-  color: var(--accent); background: rgba(56,189,248,0.1);
-  padding: 2px 8px; border-radius: 4px;
-  border: 1px solid rgba(56,189,248,0.2);
-}
-.poc-card::after {
-  content: '';
-  position: absolute; top: -40px; right: -40px;
-  width: 120px; height: 120px;
-  background: radial-gradient(circle, rgba(56,189,248,0.08), transparent 70%);
-  pointer-events: none;
-}
-
-/* ── EXP TABS ────────────────────────── */
-.exp-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
-.exp-tab {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem; letter-spacing: 0.05em;
-  padding: 0.55rem 1.1rem;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  color: var(--muted); cursor: pointer;
-  background: transparent;
-  transition: all 0.2s;
-}
-.exp-tab:hover, .exp-tab.active {
-  color: var(--accent);
-  border-color: rgba(56,189,248,0.35);
-  background: rgba(56,189,248,0.07);
-}
-.exp-panel { display: none; animation: fadeUp 0.4s ease; }
-.exp-panel.active { display: block; }
-
-/* ── PROJECT CARDS ───────────────────── */
-.proj-tag {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
-  padding: 2px 8px;
-  border-radius: 3px;
-  background: rgba(255,255,255,0.05);
-  color: var(--muted);
-  border: 1px solid rgba(255,255,255,0.08);
-}
-
-/* ── CONTACT FORM ────────────────────── */
-.form-field {
-  width: 100%; padding: 0.85rem 1rem;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: var(--text);
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.9rem;
-  transition: border-color 0.2s;
-  outline: none;
-}
-.form-field:focus { border-color: rgba(56,189,248,0.5); }
-.form-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem; letter-spacing: 0.12em;
-  color: var(--accent); text-transform: uppercase;
-  display: block; margin-bottom: 0.45rem;
-}
-
-/* ── STAT PILLS ──────────────────────── */
-.stat-pill {
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 10px; padding: 1.2rem 1.5rem;
-  text-align: center;
-}
-.stat-num {
-  font-family: 'Syne', sans-serif;
-  font-size: 2rem; font-weight: 800;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
-.stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
-
-/* ── VANTA BG ────────────────────────── */
-#vanta-bg { position: fixed; inset: 0; z-index: -1; }
-
-/* ── DIVIDER ─────────────────────────── */
-.divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 2.5rem 0; }
-
-/* ── SCROLL INDICATOR ────────────────── */
-.scroll-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--accent);
-  animation: scrollBounce 1.8s ease-in-out infinite;
-}
-@keyframes scrollBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
-
-/* ── RESPONSIVE ──────────────────────── */
-@media (max-width: 768px) {
-  .nav-links { display: none; }
-  .hamburger { display: block; }
-  #mobile-menu { display: flex; }
-  #mobile-menu.hidden { display: none; }
-  .section { padding-top: 74px; }
-}
-</style>
+    /* form field */
+    .form-field {
+      width: 100%; padding: 0.8rem 1rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.9rem;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .form-field:focus { border-color: rgba(56,189,248,0.5); }
+    .form-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.12em;
+      color: var(--accent); text-transform: uppercase;
+      display: block; margin-bottom: 0.4rem;
+    }
+  </style>
 </head>
 <body>
 
+<!-- VANTA BG -->
 <div id="vanta-bg"></div>
 
 <!-- NAVBAR -->
 <nav id="navbar">
   <div class="nav-inner">
-    <a class="nav-logo" onclick="switchView('home')">MA_SEC</a>
+    <button class="nav-logo" onclick="switchView('home')" aria-label="Home">MA_SEC</button>
     <div class="nav-links">
-      <div class="nav-btn active" id="nav-home"    onclick="switchView('home')">Home</div>
-      <div class="nav-btn"        id="nav-about"   onclick="switchView('about')">About</div>
-      <div class="nav-btn"        id="nav-skills"  onclick="switchView('skills')">Skills</div>
-      <div class="nav-btn"        id="nav-projects"onclick="switchView('projects')">Projects</div>
-      <div class="nav-btn"        id="nav-exp"     onclick="switchView('exp')">Experience</div>
-      <div class="nav-btn"        id="nav-contact" onclick="switchView('contact')">Contact</div>
+      <button class="nav-btn active" id="nav-home"    onclick="switchView('home')">Home</button>
+      <button class="nav-btn"        id="nav-about"   onclick="switchView('about')">About</button>
+      <button class="nav-btn"        id="nav-skills"  onclick="switchView('skills')">Skills</button>
+      <button class="nav-btn"        id="nav-projects"onclick="switchView('projects')">Projects</button>
+      <button class="nav-btn"        id="nav-exp"     onclick="switchView('exp')">Experience</button>
+      <button class="nav-btn"        id="nav-contact" onclick="switchView('contact')">Contact</button>
     </div>
-    <div class="hamburger" onclick="toggleMobile()"><i class="fas fa-bars"></i></div>
+    <button class="hamburger" onclick="toggleMobile()" aria-label="Menu"><i class="fas fa-bars"></i></button>
   </div>
   <div id="mobile-menu" class="hidden">
-    <div class="nav-btn" onclick="switchView('home');toggleMobile()">Home</div>
-    <div class="nav-btn" onclick="switchView('about');toggleMobile()">About</div>
-    <div class="nav-btn" onclick="switchView('skills');toggleMobile()">Skills</div>
-    <div class="nav-btn" onclick="switchView('projects');toggleMobile()">Projects</div>
-    <div class="nav-btn" onclick="switchView('exp');toggleMobile()">Experience</div>
-    <div class="nav-btn" onclick="switchView('contact');toggleMobile()">Contact</div>
+    <button class="nav-btn" onclick="switchView('home');toggleMobile()">Home</button>
+    <button class="nav-btn" onclick="switchView('about');toggleMobile()">About</button>
+    <button class="nav-btn" onclick="switchView('skills');toggleMobile()">Skills</button>
+    <button class="nav-btn" onclick="switchView('projects');toggleMobile()">Projects</button>
+    <button class="nav-btn" onclick="switchView('exp');toggleMobile()">Experience</button>
+    <button class="nav-btn" onclick="switchView('contact');toggleMobile()">Contact</button>
   </div>
 </nav>
 
-<!-- ══════════════════════════════════ HOME ══════════════════════════════════ -->
+<!-- ════════════════ HOME ════════════════ -->
 <section id="view-home" class="section active" style="display:flex;align-items:center;">
-  <div class="container" style="padding-top:2rem;">
-    <div style="display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center;">
+  <div class="container" style="padding-top:1.5rem;">
+    <div style="display:grid;grid-template-columns:1fr auto;gap:2.5rem;align-items:center;">
       <div>
-        <div class="mono" style="color:var(--accent3);font-size:0.8rem;letter-spacing:0.15em;margin-bottom:1rem;">
+        <div class="mono" style="color:var(--accent3);font-size:0.75rem;letter-spacing:0.15em;margin-bottom:0.8rem;">
           <span style="opacity:0.5">// </span>CYBERSECURITY ANALYST
         </div>
-
-        <h1 class="display" style="font-size:clamp(3rem,7vw,5.5rem);font-weight:800;line-height:1;color:#fff;margin-bottom:1.2rem;">
+        <h1 class="display" style="font-size:clamp(2.6rem,7vw,5rem);font-weight:800;line-height:1;color:#fff;margin-bottom:0.8rem;">
           MEHTAB<br><span class="grad">AHMED</span>
         </h1>
-
-        <div style="font-size:1.1rem;color:var(--muted);margin-bottom:2rem;height:32px;">
+        <div style="font-size:1rem;color:var(--muted);margin-bottom:1.5rem;height:30px;">
           <span id="typewriter"></span>
         </div>
-
-        <p style="color:var(--muted);max-width:520px;line-height:1.8;margin-bottom:2.5rem;font-size:0.95rem;">
+        <p style="color:var(--muted);max-width:520px;line-height:1.8;margin-bottom:2rem;font-size:0.95rem;">
           Delivering enterprise data security for Pakistan's leading banks.
           Specialist in <span style="color:var(--accent)">encryption key management</span>,
           <span style="color:var(--accent2)">database activity monitoring</span>, and
           <span style="color:var(--accent3)">blockchain development</span>.
         </p>
-
-        <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem;">
-          <a class="btn-primary" onclick="switchView('exp')"><i class="fas fa-briefcase"></i> View Experience</a>
+        <div style="display:flex;gap:0.8rem;flex-wrap:wrap;margin-bottom:2.5rem;">
+          <button class="btn-primary" onclick="switchView('exp')"><i class="fas fa-briefcase"></i> View Experience</button>
           <a class="btn-outline" href="mailto:Mehtabahmed093@gmail.com"><i class="fas fa-envelope"></i> Get In Touch</a>
           <a class="btn-outline" href="https://github.com/MehtabAli093" target="_blank"><i class="fab fa-github"></i> GitHub</a>
         </div>
-
-        <!-- Stats row -->
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;max-width:520px;">
-          <div class="stat-pill">
-            <div class="stat-num">2+</div>
-            <div class="stat-label">Years Exp.</div>
-          </div>
-          <div class="stat-pill">
-            <div class="stat-num">2</div>
-            <div class="stat-label">Bank POCs</div>
-          </div>
-          <div class="stat-pill">
-            <div class="stat-num">7+</div>
-            <div class="stat-label">Projects</div>
-          </div>
-          <div class="stat-pill">
-            <div class="stat-num">5+</div>
-            <div class="stat-label">Tools</div>
-          </div>
+        <!-- stats removed — only social & download -->
+        <div style="display:flex;flex-wrap:wrap;gap:0.8rem;align-items:center;">
+          <a href="https://github.com/MehtabAhmed093/portfolio.io/blob/main/Mehtab_Ahmed_CV.pdf?raw=true" download="Mehtab_Ahmed_CV.pdf" target="_blank" class="btn-outline" style="font-size:0.8rem;padding:0.5rem 1.2rem;">
+            <i class="fas fa-download"></i> Download CV
+          </a>
         </div>
       </div>
 
-      <!-- Photo -->
+      <!-- Photo + socials -->
       <div style="display:flex;flex-direction:column;align-items:center;gap:1.5rem;">
-        <div style="position:relative;width:220px;height:220px;">
+        <div style="position:relative;width:200px;height:200px;flex-shrink:0;">
           <div style="position:absolute;inset:-3px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2),var(--accent3));padding:3px;z-index:0;"></div>
           <div style="position:absolute;inset:0;border-radius:50%;background:var(--ink);z-index:1;display:flex;align-items:center;justify-content:center;">
             <img src="https://github.com/MehtabAhmed093/portfolio.io/blob/main/image.png?raw=true"
                  alt="Mehtab Ahmed"
-                 style="width:200px;height:200px;border-radius:50%;object-fit:cover;z-index:2;position:relative;">
+                 style="width:186px;height:186px;border-radius:50%;object-fit:cover;z-index:2;position:relative;"
+                 loading="lazy">
           </div>
-          <div style="position:absolute;bottom:8px;right:8px;z-index:3;width:28px;height:28px;border-radius:50%;background:var(--accent3);border:3px solid var(--ink);display:flex;align-items:center;justify-content:center;">
+          <div style="position:absolute;bottom:6px;right:6px;z-index:3;width:26px;height:26px;border-radius:50%;background:var(--accent3);border:3px solid var(--ink);display:flex;align-items:center;justify-content:center;">
             <div style="width:8px;height:8px;border-radius:50%;background:var(--ink);"></div>
           </div>
         </div>
-
-        <!-- Social links -->
-        <div style="display:flex;gap:0.75rem;">
-          <a href="https://github.com/MehtabAli093" target="_blank"
-             style="width:40px;height:40px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:1rem;transition:all 0.2s;text-decoration:none;"
-             onmouseover="this.style.color='#fff';this.style.borderColor='rgba(56,189,248,0.4)'"
-             onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">
-            <i class="fab fa-github"></i></a>
-          <a href="https://www.linkedin.com/in/mehtab-ahmed-202157317/" target="_blank"
-             style="width:40px;height:40px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:1rem;transition:all 0.2s;text-decoration:none;"
-             onmouseover="this.style.color='#0a66c2';this.style.borderColor='rgba(56,189,248,0.4)'"
-             onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">
-            <i class="fab fa-linkedin"></i></a>
-          <a href="mailto:Mehtabahmed093@gmail.com"
-             style="width:40px;height:40px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:1rem;transition:all 0.2s;text-decoration:none;"
-             onmouseover="this.style.color='#ea4335';this.style.borderColor='rgba(56,189,248,0.4)'"
-             onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border)'">
-            <i class="fas fa-envelope"></i></a>
+        <div style="display:flex;gap:0.6rem;flex-wrap:wrap;justify-content:center;">
+          <a href="https://github.com/MehtabAli093" target="_blank" aria-label="GitHub" style="width:40px;height:40px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:1rem;transition:all 0.2s;text-decoration:none;"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/mehtab-ahmed-202157317/" target="_blank" aria-label="LinkedIn" style="width:40px;height:40px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:1rem;transition:all 0.2s;text-decoration:none;"><i class="fab fa-linkedin"></i></a>
+          <a href="mailto:Mehtabahmed093@gmail.com" aria-label="Email" style="width:40px;height:40px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:1rem;transition:all 0.2s;text-decoration:none;"><i class="fas fa-envelope"></i></a>
         </div>
-
-        <!-- Download CV button -->
-        <a href="https://github.com/MehtabAhmed093/portfolio.io/blob/main/Mehtab_Ahmed_CV.pdf?raw=true" download="Mehtab_Ahmed_CV.pdf" target="_blank" class="btn-outline" style="font-size:0.8rem;padding:0.55rem 1.1rem;">
-          <i class="fas fa-download"></i> Download CV
-        </a>
       </div>
     </div>
-
-    <!-- Scroll indicator -->
-    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:3rem;opacity:0.4;">
-      <div class="mono" style="font-size:0.65rem;letter-spacing:0.15em;color:var(--muted)">SCROLL</div>
-      <div style="width:1px;height:28px;background:linear-gradient(to bottom,var(--border),transparent);"></div>
+    <!-- scroll indicator -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;margin-top:2.5rem;opacity:0.4;">
+      <div class="mono" style="font-size:0.6rem;letter-spacing:0.15em;color:var(--muted);">SCROLL</div>
+      <div style="width:1px;height:24px;background:linear-gradient(to bottom,var(--border),transparent);"></div>
       <div class="scroll-dot"></div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════ ABOUT ══════════════════════════════════ -->
+<!-- ════════════════ ABOUT ════════════════ -->
 <section id="view-about" class="section">
   <div class="container">
-    <div style="margin-bottom:3rem;">
+    <div style="margin-bottom:2.5rem;">
       <div class="section-label">// about me</div>
       <h2 class="section-title">Who I Am</h2>
       <p class="section-sub">A cybersecurity professional securing Pakistan's financial infrastructure — one encrypted database at a time.</p>
     </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;">
-
-      <!-- Terminal -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start;">
+      <!-- terminal -->
       <div class="terminal">
         <div class="terminal-bar">
           <div class="dot dot-r"></div>
@@ -543,43 +416,29 @@ body::after {
           <p><span class="t-prompt">$</span> <span class="t-blink">_</span></p>
         </div>
       </div>
-
-      <!-- Right side -->
+      <!-- right -->
       <div>
-        <p style="color:var(--muted);line-height:1.9;margin-bottom:1.5rem;font-size:0.95rem;">
+        <p style="color:var(--muted);line-height:1.9;margin-bottom:1.2rem;font-size:0.95rem;">
           I'm a <span style="color:var(--text)">BS Cyber Security graduate from FAST NUCES (2026)</span> currently working as a Junior Cybersecurity Analyst at Infotel Pakistan, where I deliver enterprise data security solutions to major financial institutions.
         </p>
         <p style="color:var(--muted);line-height:1.9;margin-bottom:2rem;font-size:0.95rem;">
           My work centers on <span style="color:var(--accent)">Thales CipherTrust Manager</span> for encryption key lifecycle management and <span style="color:var(--accent2)">Imperva DAM</span> for database activity monitoring. I've successfully delivered client-facing POCs for <strong style="color:var(--text)">Meezan Bank</strong> and <strong style="color:var(--text)">United Bank Limited (UBL)</strong>.
         </p>
-
         <div class="divider"></div>
-
-        <!-- Education -->
-        <h3 style="font-size:0.8rem;letter-spacing:0.12em;color:var(--accent);font-family:'JetBrains Mono',monospace;margin-bottom:1.25rem;text-transform:uppercase;">Education</h3>
-
-        <div style="display:flex;flex-direction:column;gap:1rem;">
+        <h3 style="font-size:0.75rem;letter-spacing:0.12em;color:var(--accent);font-family:'JetBrains Mono',monospace;margin-bottom:1.25rem;text-transform:uppercase;">Education</h3>
+        <div style="display:flex;flex-direction:column;gap:0.8rem;">
           <div class="card" style="padding:1.25rem;display:flex;justify-content:space-between;align-items:center;border-left:3px solid var(--accent);">
-            <div>
-              <div style="font-weight:600;margin-bottom:0.2rem;">B.Sc. Cyber Security</div>
-              <div style="font-size:0.85rem;color:var(--muted);">FAST NUCES — Karachi</div>
-            </div>
+            <div><div style="font-weight:600;margin-bottom:0.2rem;">B.Sc. Cyber Security</div><div style="font-size:0.85rem;color:var(--muted);">FAST NUCES — Karachi</div></div>
             <span class="badge">2022 – 2026</span>
           </div>
           <div class="card" style="padding:1.25rem;display:flex;justify-content:space-between;align-items:center;border-left:3px solid var(--accent2);">
-            <div>
-              <div style="font-weight:600;margin-bottom:0.2rem;">Intermediate (Pre-Engineering)</div>
-              <div style="font-size:0.85rem;color:var(--muted);">Cadet College Petaro</div>
-            </div>
+            <div><div style="font-weight:600;margin-bottom:0.2rem;">Intermediate (Pre-Engineering)</div><div style="font-size:0.85rem;color:var(--muted);">Cadet College Petaro</div></div>
             <span class="badge-purple">2016 – 2021</span>
           </div>
         </div>
-
         <div class="divider"></div>
-
-        <!-- Certs & events -->
-        <h3 style="font-size:0.8rem;letter-spacing:0.12em;color:var(--accent);font-family:'JetBrains Mono',monospace;margin-bottom:1rem;text-transform:uppercase;">Certifications & Events</h3>
-        <div style="display:flex;flex-wrap:wrap;gap:0.6rem;">
+        <h3 style="font-size:0.75rem;letter-spacing:0.12em;color:var(--accent);font-family:'JetBrains Mono',monospace;margin-bottom:0.8rem;text-transform:uppercase;">Certifications & Events</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
           <span class="badge-orange">CompTIA Security+ (In Progress)</span>
           <span class="badge-orange">CEH (In Progress)</span>
           <span class="badge-green">Capture The Flag (CTF)</span>
@@ -591,155 +450,60 @@ body::after {
   </div>
 </section>
 
-<!-- ══════════════════════════════════ SKILLS ══════════════════════════════════ -->
+<!-- ════════════════ SKILLS ════════════════ -->
 <section id="view-skills" class="section">
   <div class="container">
-    <div style="margin-bottom:3rem;">
+    <div style="margin-bottom:2.5rem;">
       <div class="section-label">// technical skills</div>
       <h2 class="section-title">My Arsenal</h2>
       <p class="section-sub">Tools and technologies I use to protect enterprise infrastructure.</p>
     </div>
-
     <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;">
-
-      <!-- Data Security Tools -->
-      <div class="card" style="padding:2rem;border-top:2px solid var(--accent);">
-        <h3 style="font-size:1rem;font-weight:700;margin-bottom:1.75rem;display:flex;align-items:center;gap:0.6rem;color:#fff;">
-          <i class="fas fa-lock" style="color:var(--accent);"></i> Data Security Tools
-        </h3>
-        <div style="display:flex;flex-direction:column;gap:1.2rem;">
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.88rem;margin-bottom:4px;">
-              <span>Thales CipherTrust Manager</span><span class="mono" style="color:var(--accent);font-size:0.8rem;">Expert</span>
-            </div>
-            <div class="skill-track"><div class="skill-fill" data-w="88"></div></div>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.88rem;margin-bottom:4px;">
-              <span>Imperva DAM (Gateway MX)</span><span class="mono" style="color:var(--accent);font-size:0.8rem;">Expert</span>
-            </div>
-            <div class="skill-track"><div class="skill-fill" data-w="85"></div></div>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.88rem;margin-bottom:4px;">
-              <span>Encryption Key Lifecycle Mgmt</span><span class="mono" style="color:var(--accent);font-size:0.8rem;">Advanced</span>
-            </div>
-            <div class="skill-track"><div class="skill-fill" data-w="80"></div></div>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.88rem;margin-bottom:4px;">
-              <span>Oracle RMAN + NetBackup</span><span class="mono" style="color:var(--accent);font-size:0.8rem;">Proficient</span>
-            </div>
-            <div class="skill-track"><div class="skill-fill" data-w="72"></div></div>
-          </div>
+      <!-- data security -->
+      <div class="card" style="padding:1.75rem;border-top:2px solid var(--accent);">
+        <h3 style="font-size:1rem;font-weight:700;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.6rem;color:#fff;"><i class="fas fa-lock" style="color:var(--accent);"></i> Data Security Tools</h3>
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <div><div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:2px;"><span>Thales CipherTrust Manager</span><span class="mono" style="color:var(--accent);font-size:0.75rem;">Expert</span></div><div class="skill-track"><div class="skill-fill" data-w="88"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:2px;"><span>Imperva DAM (Gateway MX)</span><span class="mono" style="color:var(--accent);font-size:0.75rem;">Expert</span></div><div class="skill-track"><div class="skill-fill" data-w="85"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:2px;"><span>Encryption Key Lifecycle Mgmt</span><span class="mono" style="color:var(--accent);font-size:0.75rem;">Advanced</span></div><div class="skill-track"><div class="skill-fill" data-w="80"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:2px;"><span>Oracle RMAN + NetBackup</span><span class="mono" style="color:var(--accent);font-size:0.75rem;">Proficient</span></div><div class="skill-track"><div class="skill-fill" data-w="72"></div></div></div>
         </div>
       </div>
-
-      <!-- SOC & SIEM -->
-      <div class="card" style="padding:2rem;border-top:2px solid var(--accent2);">
-        <h3 style="font-size:1rem;font-weight:700;margin-bottom:1.75rem;display:flex;align-items:center;gap:0.6rem;color:#fff;">
-          <i class="fas fa-shield-alt" style="color:var(--accent2);"></i> SOC & SIEM
-        </h3>
-        <div style="display:flex;flex-direction:column;gap:1.2rem;">
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.88rem;margin-bottom:4px;">
-              <span>RSA NetWitness SIEM</span><span class="mono" style="color:var(--accent2);font-size:0.8rem;">Proficient</span>
-            </div>
-            <div class="skill-track"><div class="skill-fill" data-w="70" style="background:linear-gradient(90deg,var(--accent2),#c084fc);"></div></div>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.88rem;margin-bottom:4px;">
-              <span>Carbon Black EDR</span><span class="mono" style="color:var(--accent2);font-size:0.8rem;">Proficient</span>
-            </div>
-            <div class="skill-track"><div class="skill-fill" data-w="68" style="background:linear-gradient(90deg,var(--accent2),#c084fc);"></div></div>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.88rem;margin-bottom:4px;">
-              <span>SIRP SOAR</span><span class="mono" style="color:var(--accent2);font-size:0.8rem;">Familiar</span>
-            </div>
-            <div class="skill-track"><div class="skill-fill" data-w="45" style="background:linear-gradient(90deg,var(--accent2),#c084fc);"></div></div>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.88rem;margin-bottom:4px;">
-              <span>Kaspersky EPP</span><span class="mono" style="color:var(--accent2);font-size:0.8rem;">Proficient</span>
-            </div>
-            <div class="skill-track"><div class="skill-fill" data-w="65" style="background:linear-gradient(90deg,var(--accent2),#c084fc);"></div></div>
-          </div>
+      <!-- SOC -->
+      <div class="card" style="padding:1.75rem;border-top:2px solid var(--accent2);">
+        <h3 style="font-size:1rem;font-weight:700;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.6rem;color:#fff;"><i class="fas fa-shield-alt" style="color:var(--accent2);"></i> SOC & SIEM</h3>
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <div><div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:2px;"><span>RSA NetWitness SIEM</span><span class="mono" style="color:var(--accent2);font-size:0.75rem;">Proficient</span></div><div class="skill-track"><div class="skill-fill" data-w="70" style="background:linear-gradient(90deg,var(--accent2),#c084fc);"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:2px;"><span>Carbon Black EDR</span><span class="mono" style="color:var(--accent2);font-size:0.75rem;">Proficient</span></div><div class="skill-track"><div class="skill-fill" data-w="68" style="background:linear-gradient(90deg,var(--accent2),#c084fc);"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:2px;"><span>SIRP SOAR</span><span class="mono" style="color:var(--accent2);font-size:0.75rem;">Familiar</span></div><div class="skill-track"><div class="skill-fill" data-w="45" style="background:linear-gradient(90deg,var(--accent2),#c084fc);"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:2px;"><span>Kaspersky EPP</span><span class="mono" style="color:var(--accent2);font-size:0.75rem;">Proficient</span></div><div class="skill-track"><div class="skill-fill" data-w="65" style="background:linear-gradient(90deg,var(--accent2),#c084fc);"></div></div></div>
         </div>
       </div>
-
-      <!-- Databases -->
-      <div class="card" style="padding:2rem;border-top:2px solid var(--accent3);">
-        <h3 style="font-size:1rem;font-weight:700;margin-bottom:1.75rem;display:flex;align-items:center;gap:0.6rem;color:#fff;">
-          <i class="fas fa-database" style="color:var(--accent3);"></i> Databases
-        </h3>
-        <div style="display:flex;flex-direction:column;gap:1.2rem;">
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.88rem;margin-bottom:4px;">
-              <span>Oracle DB</span><span class="mono" style="color:var(--accent3);font-size:0.8rem;">Advanced</span>
-            </div>
-            <div class="skill-track"><div class="skill-fill green" data-w="80"></div></div>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.88rem;margin-bottom:4px;">
-              <span>Microsoft SQL Server</span><span class="mono" style="color:var(--accent3);font-size:0.8rem;">Advanced</span>
-            </div>
-            <div class="skill-track"><div class="skill-fill green" data-w="78"></div></div>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.88rem;margin-bottom:4px;">
-              <span>MongoDB</span><span class="mono" style="color:var(--accent3);font-size:0.8rem;">Proficient</span>
-            </div>
-            <div class="skill-track"><div class="skill-fill green" data-w="72"></div></div>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.88rem;margin-bottom:4px;">
-              <span>IBM DB2</span><span class="mono" style="color:var(--accent3);font-size:0.8rem;">Familiar</span>
-            </div>
-            <div class="skill-track"><div class="skill-fill green" data-w="55"></div></div>
-          </div>
+      <!-- databases -->
+      <div class="card" style="padding:1.75rem;border-top:2px solid var(--accent3);">
+        <h3 style="font-size:1rem;font-weight:700;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.6rem;color:#fff;"><i class="fas fa-database" style="color:var(--accent3);"></i> Databases</h3>
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <div><div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:2px;"><span>Oracle DB</span><span class="mono" style="color:var(--accent3);font-size:0.75rem;">Advanced</span></div><div class="skill-track"><div class="skill-fill green" data-w="80"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:2px;"><span>Microsoft SQL Server</span><span class="mono" style="color:var(--accent3);font-size:0.75rem;">Advanced</span></div><div class="skill-track"><div class="skill-fill green" data-w="78"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:2px;"><span>MongoDB</span><span class="mono" style="color:var(--accent3);font-size:0.75rem;">Proficient</span></div><div class="skill-track"><div class="skill-fill green" data-w="72"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:2px;"><span>IBM DB2</span><span class="mono" style="color:var(--accent3);font-size:0.75rem;">Familiar</span></div><div class="skill-track"><div class="skill-fill green" data-w="55"></div></div></div>
         </div>
       </div>
-
-      <!-- Programming & Infosec -->
-      <div class="card" style="padding:2rem;border-top:2px solid var(--warn);">
-        <h3 style="font-size:1rem;font-weight:700;margin-bottom:1.75rem;display:flex;align-items:center;gap:0.6rem;color:#fff;">
-          <i class="fas fa-code" style="color:var(--warn);"></i> Programming & Infosec
-        </h3>
-        <div style="display:flex;flex-direction:column;gap:1.2rem;">
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.88rem;margin-bottom:4px;">
-              <span>C / C++ / Python</span><span class="mono" style="color:var(--warn);font-size:0.8rem;">Advanced</span>
-            </div>
-            <div class="skill-track"><div class="skill-fill orange" data-w="85"></div></div>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.88rem;margin-bottom:4px;">
-              <span>Penetration Testing (Kali/Metasploit)</span><span class="mono" style="color:var(--warn);font-size:0.8rem;">Proficient</span>
-            </div>
-            <div class="skill-track"><div class="skill-fill orange" data-w="70"></div></div>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.88rem;margin-bottom:4px;">
-              <span>Solidity / Blockchain</span><span class="mono" style="color:var(--warn);font-size:0.8rem;">Proficient</span>
-            </div>
-            <div class="skill-track"><div class="skill-fill orange" data-w="65"></div></div>
-          </div>
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.88rem;margin-bottom:4px;">
-              <span>Network Design (Cisco)</span><span class="mono" style="color:var(--warn);font-size:0.8rem;">Proficient</span>
-            </div>
-            <div class="skill-track"><div class="skill-fill orange" data-w="72"></div></div>
-          </div>
+      <!-- programming -->
+      <div class="card" style="padding:1.75rem;border-top:2px solid var(--warn);">
+        <h3 style="font-size:1rem;font-weight:700;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.6rem;color:#fff;"><i class="fas fa-code" style="color:var(--warn);"></i> Programming & Infosec</h3>
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <div><div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:2px;"><span>C / C++ / Python</span><span class="mono" style="color:var(--warn);font-size:0.75rem;">Advanced</span></div><div class="skill-track"><div class="skill-fill orange" data-w="85"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:2px;"><span>Penetration Testing (Kali/Metasploit)</span><span class="mono" style="color:var(--warn);font-size:0.75rem;">Proficient</span></div><div class="skill-track"><div class="skill-fill orange" data-w="70"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:2px;"><span>Solidity / Blockchain</span><span class="mono" style="color:var(--warn);font-size:0.75rem;">Proficient</span></div><div class="skill-track"><div class="skill-fill orange" data-w="65"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:2px;"><span>Network Design (Cisco)</span><span class="mono" style="color:var(--warn);font-size:0.75rem;">Proficient</span></div><div class="skill-track"><div class="skill-fill orange" data-w="72"></div></div></div>
         </div>
       </div>
-
     </div>
-
-    <!-- Tech chips row -->
-    <div style="margin-top:2rem;padding:1.5rem;background:var(--surface2);border-radius:12px;border:1px solid var(--border);">
-      <div class="mono" style="font-size:0.7rem;color:var(--muted);margin-bottom:1rem;letter-spacing:0.12em;">TOOLS & PLATFORMS</div>
-      <div style="display:flex;flex-wrap:wrap;gap:0.6rem;">
+    <!-- chips -->
+    <div style="margin-top:2rem;padding:1.25rem;background:var(--surface2);border-radius:12px;border:1px solid var(--border);">
+      <div class="mono" style="font-size:0.7rem;color:var(--muted);margin-bottom:0.8rem;letter-spacing:0.12em;">TOOLS & PLATFORMS</div>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
         <span class="badge">Wireshark</span><span class="badge">Kali Linux</span><span class="badge">Metasploit</span>
         <span class="badge">Git</span><span class="badge">Oracle Linux</span><span class="badge">RHEL</span>
         <span class="badge">Ubuntu</span><span class="badge">Windows Server</span><span class="badge">Cisco Packet Tracer</span>
@@ -751,384 +515,127 @@ body::after {
   </div>
 </section>
 
-<!-- ══════════════════════════════════ PROJECTS ══════════════════════════════════ -->
+<!-- ════════════════ PROJECTS ════════════════ -->
 <section id="view-projects" class="section">
   <div class="container">
-    <div style="margin-bottom:3rem;">
+    <div style="margin-bottom:2.5rem;">
       <div class="section-label">// academic & personal</div>
       <h2 class="section-title">Projects</h2>
       <p class="section-sub">From blockchain systems to AI-powered vulnerability detectors — built through 4 years of CS at FAST NUCES.</p>
     </div>
-
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;">
-
-      <!-- FYP - FEATURED -->
-      <div class="card" style="padding:1.75rem;grid-column:span 3;border:1px solid rgba(56,189,248,0.3);background:linear-gradient(135deg,rgba(56,189,248,0.05),rgba(129,140,248,0.05));">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;">
-          <div>
-            <span class="badge" style="margin-bottom:0.75rem;display:inline-block;">⭐ Final Year Project</span>
-            <h3 style="font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:0.4rem;">Blockchain Vehicle Taxation System</h3>
-            <p style="color:var(--muted);font-size:0.9rem;max-width:700px;line-height:1.7;">
-              Built a tamper-proof vehicle taxation platform on Ethereum using Solidity smart contracts. The system automates tax collection, creates an immutable audit trail, and enables detection and investigation of fraudulent transactions — eliminating the need for centralized trust.
-            </p>
-          </div>
-          <div style="text-align:right;flex-shrink:0;margin-left:2rem;">
-            <div style="width:60px;height:60px;border-radius:12px;background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.2);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">
-              ⛓️
-            </div>
-          </div>
+      <!-- FYP featured -->
+      <div class="card" style="padding:1.5rem;grid-column:span 3;border:1px solid rgba(56,189,248,0.3);background:linear-gradient(135deg,rgba(56,189,248,0.05),rgba(129,140,248,0.05));">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.8rem;flex-wrap:wrap;gap:0.8rem;">
+          <div><span class="badge" style="margin-bottom:0.5rem;display:inline-block;">⭐ Final Year Project</span><h3 style="font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:0.3rem;">Blockchain Vehicle Taxation System</h3><p style="color:var(--muted);font-size:0.9rem;max-width:700px;line-height:1.7;">Built a tamper-proof vehicle taxation platform on Ethereum using Solidity smart contracts. The system automates tax collection, creates an immutable audit trail, and enables detection and investigation of fraudulent transactions — eliminating the need for centralized trust.</p></div>
+          <div style="text-align:right;flex-shrink:0;"><div style="width:56px;height:56px;border-radius:12px;background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.2);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">⛓️</div></div>
         </div>
-        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-          <span class="proj-tag">Solidity</span><span class="proj-tag">Ethereum</span><span class="proj-tag">Smart Contracts</span><span class="proj-tag">Web3.js</span><span class="proj-tag">Blockchain</span>
-        </div>
+        <div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span class="proj-tag" style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;padding:2px 8px;border-radius:3px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.08);">Solidity</span><span class="proj-tag" style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;padding:2px 8px;border-radius:3px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.08);">Ethereum</span><span class="proj-tag" style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;padding:2px 8px;border-radius:3px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.08);">Smart Contracts</span><span class="proj-tag" style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;padding:2px 8px;border-radius:3px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.08);">Web3.js</span><span class="proj-tag" style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;padding:2px 8px;border-radius:3px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.08);">Blockchain</span></div>
       </div>
-
-      <!-- AI Vuln Detector -->
-      <div class="card" style="padding:1.5rem;">
-        <div style="font-size:1.75rem;margin-bottom:1rem;">🤖</div>
-        <div style="margin-bottom:0.4rem;display:flex;justify-content:space-between;align-items:center;">
-          <h3 style="font-size:1rem;font-weight:700;color:#fff;">AI Vulnerability Detector</h3>
-          <span class="mono" style="font-size:0.65rem;color:var(--muted);">5th Sem</span>
-        </div>
-        <p style="color:var(--muted);font-size:0.85rem;line-height:1.7;margin-bottom:1rem;">ML model detecting SQLi, CSRF, XSS, and CMDi attacks in web applications with high accuracy.</p>
-        <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
-          <span class="proj-tag">Python</span><span class="proj-tag">ML/AI</span><span class="proj-tag">SQLite</span><span class="proj-tag">Flask</span>
-        </div>
-      </div>
-
-      <!-- Blockchain Voting -->
-      <div class="card" style="padding:1.5rem;">
-        <div style="font-size:1.75rem;margin-bottom:1rem;">🗳️</div>
-        <div style="margin-bottom:0.4rem;display:flex;justify-content:space-between;align-items:center;">
-          <h3 style="font-size:1rem;font-weight:700;color:#fff;">Blockchain Voting System</h3>
-          <span class="mono" style="font-size:0.65rem;color:var(--muted);">6th Sem</span>
-        </div>
-        <p style="color:var(--muted);font-size:0.85rem;line-height:1.7;margin-bottom:1rem;">Decentralized, tamper-resistant election platform on Ethereum ensuring integrity and verifiable results.</p>
-        <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
-          <span class="proj-tag">Python</span><span class="proj-tag">Blockchain</span><span class="proj-tag">Solidity</span>
-        </div>
-      </div>
-
-      <!-- RBAC Healthcare -->
-      <div class="card" style="padding:1.5rem;">
-        <div style="font-size:1.75rem;margin-bottom:1rem;">🏥</div>
-        <div style="margin-bottom:0.4rem;display:flex;justify-content:space-between;align-items:center;">
-          <h3 style="font-size:1rem;font-weight:700;color:#fff;">RBAC Healthcare App</h3>
-          <span class="mono" style="font-size:0.65rem;color:var(--muted);">6th Sem</span>
-        </div>
-        <p style="color:var(--muted);font-size:0.85rem;line-height:1.7;margin-bottom:1rem;">Secure healthcare records system with role-based access control preventing IDOR vulnerabilities.</p>
-        <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
-          <span class="proj-tag">Python</span><span class="proj-tag">MongoDB</span><span class="proj-tag">Flask</span>
-        </div>
-      </div>
-
-      <!-- Network Simulation -->
-      <div class="card" style="padding:1.5rem;">
-        <div style="font-size:1.75rem;margin-bottom:1rem;">🌐</div>
-        <div style="margin-bottom:0.4rem;display:flex;justify-content:space-between;align-items:center;">
-          <h3 style="font-size:1rem;font-weight:700;color:#fff;">Enterprise Network Sim</h3>
-          <span class="mono" style="font-size:0.65rem;color:var(--muted);">4th Sem</span>
-        </div>
-        <p style="color:var(--muted);font-size:0.85rem;line-height:1.7;margin-bottom:1rem;">Complex enterprise network with VLAN, DHCP, routing, and secure remote access in Cisco Packet Tracer.</p>
-        <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
-          <span class="proj-tag">Cisco</span><span class="proj-tag">VLAN</span><span class="proj-tag">Routing</span>
-        </div>
-      </div>
-
-      <!-- Bank System -->
-      <div class="card" style="padding:1.5rem;">
-        <div style="font-size:1.75rem;margin-bottom:1rem;">🏦</div>
-        <div style="margin-bottom:0.4rem;display:flex;justify-content:space-between;align-items:center;">
-          <h3 style="font-size:1rem;font-weight:700;color:#fff;">Bank Management System</h3>
-          <span class="mono" style="font-size:0.65rem;color:var(--muted);">2nd Sem</span>
-        </div>
-        <p style="color:var(--muted);font-size:0.85rem;line-height:1.7;margin-bottom:1rem;">OOP-based system for secure bank operations, account management, and transaction logging.</p>
-        <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
-          <span class="proj-tag">C++</span><span class="proj-tag">OOP</span>
-        </div>
-      </div>
-
-      <!-- Pac-Man -->
-      <div class="card" style="padding:1.5rem;">
-        <div style="font-size:1.75rem;margin-bottom:1rem;">👾</div>
-        <div style="margin-bottom:0.4rem;display:flex;justify-content:space-between;align-items:center;">
-          <h3 style="font-size:1rem;font-weight:700;color:#fff;">Pac-Man Game</h3>
-          <span class="mono" style="font-size:0.65rem;color:var(--muted);">1st Sem</span>
-        </div>
-        <p style="color:var(--muted);font-size:0.85rem;line-height:1.7;margin-bottom:1rem;">Classic arcade game recreated in C with ghost AI movement algorithms and custom scoring.</p>
-        <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
-          <span class="proj-tag">C</span><span class="proj-tag">AI Logic</span>
-        </div>
-      </div>
-
+      <!-- other projects -->
+      <div class="card" style="padding:1.25rem;"><div style="font-size:1.5rem;margin-bottom:0.6rem;">🤖</div><div style="margin-bottom:0.3rem;display:flex;justify-content:space-between;align-items:center;"><h3 style="font-size:0.95rem;font-weight:700;color:#fff;">AI Vulnerability Detector</h3><span class="mono" style="font-size:0.6rem;color:var(--muted);">5th Sem</span></div><p style="color:var(--muted);font-size:0.8rem;line-height:1.6;margin-bottom:0.8rem;">ML model detecting SQLi, CSRF, XSS, and CMDi attacks in web applications with high accuracy.</p><div style="display:flex;gap:0.3rem;flex-wrap:wrap;"><span class="proj-tag" style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;padding:1px 6px;border-radius:3px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.08);">Python</span><span class="proj-tag" style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;padding:1px 6px;border-radius:3px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.08);">ML/AI</span><span class="proj-tag" style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;padding:1px 6px;border-radius:3px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.08);">SQLite</span><span class="proj-tag" style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;padding:1px 6px;border-radius:3px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.08);">Flask</span></div></div>
+      <div class="card" style="padding:1.25rem;"><div style="font-size:1.5rem;margin-bottom:0.6rem;">🗳️</div><div style="margin-bottom:0.3rem;display:flex;justify-content:space-between;align-items:center;"><h3 style="font-size:0.95rem;font-weight:700;color:#fff;">Blockchain Voting System</h3><span class="mono" style="font-size:0.6rem;color:var(--muted);">6th Sem</span></div><p style="color:var(--muted);font-size:0.8rem;line-height:1.6;margin-bottom:0.8rem;">Decentralized, tamper-resistant election platform on Ethereum ensuring integrity and verifiable results.</p><div style="display:flex;gap:0.3rem;flex-wrap:wrap;"><span class="proj-tag" style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;padding:1px 6px;border-radius:3px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.08);">Python</span><span class="proj-tag" style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;padding:1px 6px;border-radius:3px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.08);">Blockchain</span><span class="proj-tag" style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;padding:1px 6px;border-radius:3px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.08);">Solidity</span></div></div>
+      <div class="card" style="padding:1.25rem;"><div style="font-size:1.5rem;margin-bottom:0.6rem;">🏥</div><div style="margin-bottom:0.3rem;display:flex;justify-content:space-between;align-items:center;"><h3 style="font-size:0.95rem;font-weight:700;color:#fff;">RBAC Healthcare App</h3><span class="mono" style="font-size:0.6rem;color:var(--muted);">6th Sem</span></div><p style="color:var(--muted);font-size:0.8rem;line-height:1.6;margin-bottom:0.8rem;">Secure healthcare records system with role-based access control preventing IDOR vulnerabilities.</p><div style="display:flex;gap:0.3rem;flex-wrap:wrap;"><span class="proj-tag" style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;padding:1px 6px;border-radius:3px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.08);">Python</span><span class="proj-tag" style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;padding:1px 6px;border-radius:3px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.08);">MongoDB</span><span class="proj-tag" style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;padding:1px 6px;border-radius:3px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.08);">Flask</span></div></div>
+      <div class="card" style="padding:1.25rem;"><div style="font-size:1.5rem;margin-bottom:0.6rem;">🌐</div><div style="margin-bottom:0.3rem;display:flex;justify-content:space-between;align-items:center;"><h3 style="font-size:0.95rem;font-weight:700;color:#fff;">Enterprise Network Sim</h3><span class="mono" style="font-size:0.6rem;color:var(--muted);">4th Sem</span></div><p style="color:var(--muted);font-size:0.8rem;line-height:1.6;margin-bottom:0.8rem;">Complex enterprise network with VLAN, DHCP, routing, and secure remote access in Cisco Packet Tracer.</p><div style="display:flex;gap:0.3rem;flex-wrap:wrap;"><span class="proj-tag" style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;padding:1px 6px;border-radius:3px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.08);">Cisco</span><span class="proj-tag" style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;padding:1px 6px;border-radius:3px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.08);">VLAN</span><span class="proj-tag" style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;padding:1px 6px;border-radius:3px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.08);">Routing</span></div></div>
+      <div class="card" style="padding:1.25rem;"><div style="font-size:1.5rem;margin-bottom:0.6rem;">🏦</div><div style="margin-bottom:0.3rem;display:flex;justify-content:space-between;align-items:center;"><h3 style="font-size:0.95rem;font-weight:700;color:#fff;">Bank Management System</h3><span class="mono" style="font-size:0.6rem;color:var(--muted);">2nd Sem</span></div><p style="color:var(--muted);font-size:0.8rem;line-height:1.6;margin-bottom:0.8rem;">OOP-based system for secure bank operations, account management, and transaction logging.</p><div style="display:flex;gap:0.3rem;flex-wrap:wrap;"><span class="proj-tag" style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;padding:1px 6px;border-radius:3px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.08);">C++</span><span class="proj-tag" style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;padding:1px 6px;border-radius:3px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.08);">OOP</span></div></div>
+      <div class="card" style="padding:1.25rem;"><div style="font-size:1.5rem;margin-bottom:0.6rem;">👾</div><div style="margin-bottom:0.3rem;display:flex;justify-content:space-between;align-items:center;"><h3 style="font-size:0.95rem;font-weight:700;color:#fff;">Pac-Man Game</h3><span class="mono" style="font-size:0.6rem;color:var(--muted);">1st Sem</span></div><p style="color:var(--muted);font-size:0.8rem;line-height:1.6;margin-bottom:0.8rem;">Classic arcade game recreated in C with ghost AI movement algorithms and custom scoring.</p><div style="display:flex;gap:0.3rem;flex-wrap:wrap;"><span class="proj-tag" style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;padding:1px 6px;border-radius:3px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.08);">C</span><span class="proj-tag" style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;padding:1px 6px;border-radius:3px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.08);">AI Logic</span></div></div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════ EXPERIENCE ══════════════════════════════════ -->
+<!-- ════════════════ EXPERIENCE ════════════════ -->
 <section id="view-exp" class="section">
   <div class="container">
-    <div style="margin-bottom:3rem;">
+    <div style="margin-bottom:2.5rem;">
       <div class="section-label">// career</div>
       <h2 class="section-title">Experience</h2>
       <p class="section-sub">Professional work, internships, and competitive achievements.</p>
     </div>
-
     <div class="exp-tabs">
-      <div class="exp-tab active" onclick="showTab('infotel',this)"><i class="fas fa-shield-alt" style="margin-right:6px;"></i>Infotel (Current)</div>
-      <div class="exp-tab" onclick="showTab('pia',this)"><i class="fas fa-plane" style="margin-right:6px;"></i>PIA SOC</div>
-      <div class="exp-tab" onclick="showTab('virtual',this)"><i class="fas fa-laptop-code" style="margin-right:6px;"></i>Virtual Internships</div>
-      <div class="exp-tab" onclick="showTab('hackathons',this)"><i class="fas fa-flag" style="margin-right:6px;"></i>Hackathons & CTFs</div>
+      <button class="exp-tab active" onclick="showTab('infotel',this)"><i class="fas fa-shield-alt" style="margin-right:4px;"></i>Infotel</button>
+      <button class="exp-tab" onclick="showTab('pia',this)"><i class="fas fa-plane" style="margin-right:4px;"></i>PIA SOC</button>
+      <button class="exp-tab" onclick="showTab('virtual',this)"><i class="fas fa-laptop-code" style="margin-right:4px;"></i>Virtual</button>
+      <button class="exp-tab" onclick="showTab('hackathons',this)"><i class="fas fa-flag" style="margin-right:4px;"></i>Hackathons</button>
     </div>
 
     <!-- INFOTEL -->
     <div id="tab-infotel" class="exp-panel active">
-      <div class="card" style="padding:2.5rem;border-left:3px solid var(--accent);">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
-          <div>
-            <h3 style="font-size:1.4rem;font-weight:700;color:#fff;margin-bottom:0.3rem;">Infotel Pakistan</h3>
-            <p style="color:var(--accent);font-size:1rem;">Junior Cybersecurity Analyst — Data Protection & Encryption</p>
-          </div>
+      <div class="card" style="padding:2rem;border-left:3px solid var(--accent);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;flex-wrap:wrap;gap:0.8rem;">
+          <div><h3 style="font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:0.2rem;">Infotel Pakistan</h3><p style="color:var(--accent);font-size:0.95rem;">Junior Cybersecurity Analyst — Data Protection & Encryption</p></div>
           <span class="badge">January 2026 – Present</span>
         </div>
-
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;">
-          <div>
-            <h4 style="font-size:0.75rem;letter-spacing:0.12em;color:var(--muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;margin-bottom:1.25rem;">Responsibilities</h4>
-            <ul style="list-style:none;display:flex;flex-direction:column;gap:0.85rem;">
-              <li style="display:flex;gap:0.75rem;color:var(--muted);font-size:0.9rem;line-height:1.6;">
-                <span style="color:var(--accent);margin-top:2px;flex-shrink:0;">▹</span>
-                Implement and manage <strong style="color:var(--text)">Thales CipherTrust Manager</strong> for enterprise encryption key lifecycle management and data-at-rest protection.
-              </li>
-              <li style="display:flex;gap:0.75rem;color:var(--muted);font-size:0.9rem;line-height:1.6;">
-                <span style="color:var(--accent);margin-top:2px;flex-shrink:0;">▹</span>
-                Deploy and administer <strong style="color:var(--text)">Imperva DAM</strong> to audit, monitor, and alert on database access patterns in real time.
-              </li>
-              <li style="display:flex;gap:0.75rem;color:var(--muted);font-size:0.9rem;line-height:1.6;">
-                <span style="color:var(--accent);margin-top:2px;flex-shrink:0;">▹</span>
-                Configure encryption policies and access controls for compliance with banking data security standards.
-              </li>
-              <li style="display:flex;gap:0.75rem;color:var(--muted);font-size:0.9rem;line-height:1.6;">
-                <span style="color:var(--accent);margin-top:2px;flex-shrink:0;">▹</span>
-                Review DAM audit logs, security alerts, and incident reports to identify anomalies and support forensic investigations.
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 style="font-size:0.75rem;letter-spacing:0.12em;color:var(--muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;margin-bottom:1.25rem;">Tech Stack</h4>
-            <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.5rem;">
-              <span class="badge">CipherTrust Manager</span>
-              <span class="badge">Imperva DAM</span>
-              <span class="badge-green">Oracle DB</span>
-              <span class="badge-green">MSSQL</span>
-              <span class="badge-purple">Thales HSM</span>
-              <span class="badge-orange">RMAN</span>
-              <span class="badge-orange">NetBackup</span>
-            </div>
-          </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+          <div><h4 style="font-size:0.7rem;letter-spacing:0.12em;color:var(--muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;margin-bottom:1rem;">Responsibilities</h4><ul style="list-style:none;display:flex;flex-direction:column;gap:0.7rem;"><li style="display:flex;gap:0.6rem;color:var(--muted);font-size:0.85rem;line-height:1.6;"><span style="color:var(--accent);flex-shrink:0;">▹</span> Implement and manage <strong style="color:var(--text);">Thales CipherTrust Manager</strong> for enterprise encryption key lifecycle management.</li><li style="display:flex;gap:0.6rem;color:var(--muted);font-size:0.85rem;line-height:1.6;"><span style="color:var(--accent);flex-shrink:0;">▹</span> Deploy and administer <strong style="color:var(--text);">Imperva DAM</strong> to audit and monitor database access patterns.</li><li style="display:flex;gap:0.6rem;color:var(--muted);font-size:0.85rem;line-height:1.6;"><span style="color:var(--accent);flex-shrink:0;">▹</span> Configure encryption policies and access controls for banking data security.</li><li style="display:flex;gap:0.6rem;color:var(--muted);font-size:0.85rem;line-height:1.6;"><span style="color:var(--accent);flex-shrink:0;">▹</span> Review DAM audit logs and alerts to support forensic investigations.</li></ul></div>
+          <div><h4 style="font-size:0.7rem;letter-spacing:0.12em;color:var(--muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;margin-bottom:1rem;">Tech Stack</h4><div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1.5rem;"><span class="badge">CipherTrust Manager</span><span class="badge">Imperva DAM</span><span class="badge-green">Oracle DB</span><span class="badge-green">MSSQL</span><span class="badge-purple">Thales HSM</span><span class="badge-orange">RMAN</span><span class="badge-orange">NetBackup</span></div></div>
         </div>
-
-        <!-- POC CARDS -->
         <div class="divider"></div>
-        <h4 style="font-size:0.75rem;letter-spacing:0.12em;color:var(--muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;margin-bottom:1.25rem;">Client Proof of Concepts</h4>
-
+        <h4 style="font-size:0.7rem;letter-spacing:0.12em;color:var(--muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;margin-bottom:1rem;">Client Proof of Concepts</h4>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
-
-          <div class="poc-card">
-            <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.75rem;">
-              <div style="width:36px;height:36px;border-radius:8px;background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">🏦</div>
-              <div>
-                <div style="font-weight:700;font-size:0.95rem;color:#fff;">Meezan Bank</div>
-                <div style="font-size:0.75rem;color:var(--accent3);">✓ Completed</div>
-              </div>
-            </div>
-            <p style="color:var(--muted);font-size:0.85rem;line-height:1.7;margin-bottom:0.75rem;">
-              Demonstrated CTM compatibility with Oracle and MSSQL databases. Validated full DR failover: backed up encrypted DBs via RMAN + NetBackup, restored to DR server, migrated wallet, and reconnected to CTM using same encryption keys — eliminating dependency on the primary server.
-            </p>
-            <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
-              <span class="badge-green" style="font-size:0.65rem;">CTM Key Mgmt</span>
-              <span class="badge-green" style="font-size:0.65rem;">Oracle/MSSQL</span>
-              <span class="badge-green" style="font-size:0.65rem;">DR Failover</span>
-              <span class="badge-green" style="font-size:0.65rem;">RMAN</span>
-            </div>
-          </div>
-
-          <div class="poc-card" style="border-color:rgba(129,140,248,0.3);">
-            <div style="position:absolute;top:12px;right:14px;font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;color:var(--accent2);background:rgba(129,140,248,0.1);padding:2px 8px;border-radius:4px;border:1px solid rgba(129,140,248,0.2);">IN PROGRESS</div>
-            <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.75rem;">
-              <div style="width:36px;height:36px;border-radius:8px;background:rgba(129,140,248,0.1);border:1px solid rgba(129,140,248,0.2);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">🏛️</div>
-              <div>
-                <div style="font-weight:700;font-size:0.95rem;color:#fff;">United Bank Limited (UBL)</div>
-                <div style="font-size:0.75rem;color:var(--accent2);">→ Moving to Production</div>
-              </div>
-            </div>
-            <p style="color:var(--muted);font-size:0.85rem;line-height:1.7;margin-bottom:0.75rem;">
-              Deployed Imperva DAM Gateway MX and database agents across multiple DB instances in internal test environment. Configured audit and security policies, validated real-time monitoring capabilities. POC accepted by UBL — transitioning into full production deployment.
-            </p>
-            <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
-              <span class="badge-purple" style="font-size:0.65rem;">Gateway MX</span>
-              <span class="badge-purple" style="font-size:0.65rem;">DB Agents</span>
-              <span class="badge-purple" style="font-size:0.65rem;">Audit Policies</span>
-              <span class="badge-purple" style="font-size:0.65rem;">DAM</span>
-            </div>
-          </div>
-
+          <div class="poc-card"><div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.6rem;"><div style="width:34px;height:34px;border-radius:8px;background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.2);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">🏦</div><div><div style="font-weight:700;font-size:0.9rem;color:#fff;">Meezan Bank</div><div style="font-size:0.7rem;color:var(--accent3);">✓ Completed</div></div></div><p style="color:var(--muted);font-size:0.8rem;line-height:1.6;margin-bottom:0.6rem;">Demonstrated CTM compatibility with Oracle and MSSQL databases. Validated full DR failover: backed up encrypted DBs via RMAN + NetBackup, restored to DR server, migrated wallet, and reconnected to CTM using same encryption keys.</p><div style="display:flex;gap:0.3rem;flex-wrap:wrap;"><span class="badge-green" style="font-size:0.6rem;">CTM Key Mgmt</span><span class="badge-green" style="font-size:0.6rem;">Oracle/MSSQL</span><span class="badge-green" style="font-size:0.6rem;">DR Failover</span><span class="badge-green" style="font-size:0.6rem;">RMAN</span></div></div>
+          <div class="poc-card" style="border-color:rgba(129,140,248,0.3);"><div style="position:absolute;top:12px;right:14px;font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.15em;color:var(--accent2);background:rgba(129,140,248,0.1);padding:2px 8px;border-radius:4px;border:1px solid rgba(129,140,248,0.2);">IN PROGRESS</div><div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.6rem;"><div style="width:34px;height:34px;border-radius:8px;background:rgba(129,140,248,0.1);border:1px solid rgba(129,140,248,0.2);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">🏛️</div><div><div style="font-weight:700;font-size:0.9rem;color:#fff;">United Bank Limited (UBL)</div><div style="font-size:0.7rem;color:var(--accent2);">→ Moving to Production</div></div></div><p style="color:var(--muted);font-size:0.8rem;line-height:1.6;margin-bottom:0.6rem;">Deployed Imperva DAM Gateway MX and database agents across multiple DB instances. Configured audit policies, validated real-time monitoring. POC accepted — transitioning to production.</p><div style="display:flex;gap:0.3rem;flex-wrap:wrap;"><span class="badge-purple" style="font-size:0.6rem;">Gateway MX</span><span class="badge-purple" style="font-size:0.6rem;">DB Agents</span><span class="badge-purple" style="font-size:0.6rem;">Audit Policies</span><span class="badge-purple" style="font-size:0.6rem;">DAM</span></div></div>
         </div>
       </div>
     </div>
 
     <!-- PIA -->
     <div id="tab-pia" class="exp-panel">
-      <div class="card" style="padding:2.5rem;border-left:3px solid var(--accent3);">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
-          <div>
-            <h3 style="font-size:1.4rem;font-weight:700;color:#fff;margin-bottom:0.3rem;">Pakistan International Airlines (PIA)</h3>
-            <p style="color:var(--accent3);font-size:1rem;">Cybersecurity Intern — Security Operations Center (SOC)</p>
-          </div>
-          <span class="badge-green">June 2024 – August 2024</span>
-        </div>
-        <ul style="list-style:none;display:flex;flex-direction:column;gap:0.9rem;margin-bottom:1.5rem;">
-          <li style="display:flex;gap:0.75rem;color:var(--muted);font-size:0.9rem;line-height:1.6;"><span style="color:var(--accent3);flex-shrink:0;margin-top:2px;">▹</span>Monitored and analyzed enterprise security events using <strong style="color:var(--text)">RSA NetWitness SIEM</strong> to identify threats and anomalies.</li>
-          <li style="display:flex;gap:0.75rem;color:var(--muted);font-size:0.9rem;line-height:1.6;"><span style="color:var(--accent3);flex-shrink:0;margin-top:2px;">▹</span>Investigated and triaged alerts with <strong style="color:var(--text)">Carbon Black EDR</strong> — malware detection, behavioral analysis, endpoint hardening.</li>
-          <li style="display:flex;gap:0.75rem;color:var(--muted);font-size:0.9rem;line-height:1.6;"><span style="color:var(--accent3);flex-shrink:0;margin-top:2px;">▹</span>Supported incident response using <strong style="color:var(--text)">Kaspersky EPP</strong> for endpoint protection, containment, and remediation.</li>
-          <li style="display:flex;gap:0.75rem;color:var(--muted);font-size:0.9rem;line-height:1.6;"><span style="color:var(--accent3);flex-shrink:0;margin-top:2px;">▹</span>Utilized <strong style="color:var(--text)">SIRP SOAR</strong> to automate alert handling, streamline case management, and generate incident reports.</li>
-          <li style="display:flex;gap:0.75rem;color:var(--muted);font-size:0.9rem;line-height:1.6;"><span style="color:var(--accent3);flex-shrink:0;margin-top:2px;">▹</span>Collaborated with SOC analysts on threat intelligence gathering, log correlation, and escalation procedures.</li>
-        </ul>
-        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
-          <span class="badge">RSA NetWitness</span><span class="badge">Carbon Black EDR</span><span class="badge">SIRP SOAR</span><span class="badge-green">Kaspersky EPP</span>
-        </div>
+      <div class="card" style="padding:2rem;border-left:3px solid var(--accent3);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;flex-wrap:wrap;gap:0.8rem;"><div><h3 style="font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:0.2rem;">Pakistan International Airlines (PIA)</h3><p style="color:var(--accent3);font-size:0.95rem;">Cybersecurity Intern — SOC</p></div><span class="badge-green">June 2024 – Aug 2024</span></div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:0.7rem;margin-bottom:1.2rem;"><li style="display:flex;gap:0.6rem;color:var(--muted);font-size:0.85rem;line-height:1.6;"><span style="color:var(--accent3);flex-shrink:0;">▹</span>Monitored enterprise security events using <strong style="color:var(--text);">RSA NetWitness SIEM</strong> to identify threats.</li><li style="display:flex;gap:0.6rem;color:var(--muted);font-size:0.85rem;line-height:1.6;"><span style="color:var(--accent3);flex-shrink:0;">▹</span>Investigated alerts with <strong style="color:var(--text);">Carbon Black EDR</strong> — malware detection, behavioral analysis.</li><li style="display:flex;gap:0.6rem;color:var(--muted);font-size:0.85rem;line-height:1.6;"><span style="color:var(--accent3);flex-shrink:0;">▹</span>Supported incident response using <strong style="color:var(--text);">Kaspersky EPP</strong> for endpoint protection.</li><li style="display:flex;gap:0.6rem;color:var(--muted);font-size:0.85rem;line-height:1.6;"><span style="color:var(--accent3);flex-shrink:0;">▹</span>Utilized <strong style="color:var(--text);">SIRP SOAR</strong> to automate alert handling and case management.</li></ul>
+        <div style="display:flex;flex-wrap:wrap;gap:0.4rem;"><span class="badge">RSA NetWitness</span><span class="badge">Carbon Black EDR</span><span class="badge">SIRP SOAR</span><span class="badge-green">Kaspersky EPP</span></div>
       </div>
     </div>
 
     <!-- VIRTUAL -->
     <div id="tab-virtual" class="exp-panel">
-      <div class="card" style="padding:2.5rem;border-left:3px solid var(--accent2);">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
-          <div>
-            <h3 style="font-size:1.4rem;font-weight:700;color:#fff;margin-bottom:0.3rem;">Virtual Internships</h3>
-            <p style="color:var(--accent2);font-size:1rem;">Code Alpha & Developers Hub</p>
-          </div>
-          <span class="badge-purple">April – July 2025</span>
-        </div>
-        <ul style="list-style:none;display:flex;flex-direction:column;gap:0.9rem;margin-bottom:1.5rem;">
-          <li style="display:flex;gap:0.75rem;color:var(--muted);font-size:0.9rem;line-height:1.6;"><span style="color:var(--accent2);flex-shrink:0;margin-top:2px;">▹</span>Executed ethical hacking labs covering XSS, SQL injection, and Wi-Fi security testing.</li>
-          <li style="display:flex;gap:0.75rem;color:var(--muted);font-size:0.9rem;line-height:1.6;"><span style="color:var(--accent2);flex-shrink:0;margin-top:2px;">▹</span>Developed custom Python scripts for network reconnaissance and automated vulnerability scanning.</li>
-          <li style="display:flex;gap:0.75rem;color:var(--muted);font-size:0.9rem;line-height:1.6;"><span style="color:var(--accent2);flex-shrink:0;margin-top:2px;">▹</span>Conducted vulnerability assessments on simulated enterprise environments using Kali Linux and Metasploit.</li>
-        </ul>
-        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
-          <span class="badge">Kali Linux</span><span class="badge">Metasploit</span><span class="badge-purple">Python</span><span class="badge-purple">Burp Suite</span>
-        </div>
+      <div class="card" style="padding:2rem;border-left:3px solid var(--accent2);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;flex-wrap:wrap;gap:0.8rem;"><div><h3 style="font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:0.2rem;">Virtual Internships</h3><p style="color:var(--accent2);font-size:0.95rem;">Code Alpha & Developers Hub</p></div><span class="badge-purple">April – July 2025</span></div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:0.7rem;margin-bottom:1.2rem;"><li style="display:flex;gap:0.6rem;color:var(--muted);font-size:0.85rem;line-height:1.6;"><span style="color:var(--accent2);flex-shrink:0;">▹</span>Executed ethical hacking labs covering XSS, SQLi, and Wi-Fi security testing.</li><li style="display:flex;gap:0.6rem;color:var(--muted);font-size:0.85rem;line-height:1.6;"><span style="color:var(--accent2);flex-shrink:0;">▹</span>Developed Python scripts for network recon and automated vulnerability scanning.</li><li style="display:flex;gap:0.6rem;color:var(--muted);font-size:0.85rem;line-height:1.6;"><span style="color:var(--accent2);flex-shrink:0;">▹</span>Conducted vulnerability assessments on simulated environments using Kali and Metasploit.</li></ul>
+        <div style="display:flex;flex-wrap:wrap;gap:0.4rem;"><span class="badge">Kali Linux</span><span class="badge">Metasploit</span><span class="badge-purple">Python</span><span class="badge-purple">Burp Suite</span></div>
       </div>
     </div>
 
     <!-- HACKATHONS -->
     <div id="tab-hackathons" class="exp-panel">
-      <div class="card" style="padding:2.5rem;border-left:3px solid var(--warn);">
-        <h3 style="font-size:1.4rem;font-weight:700;color:#fff;margin-bottom:0.3rem;">Hackathons & CTFs</h3>
-        <p style="color:var(--warn);margin-bottom:2rem;">Competitive Cybersecurity & Programming</p>
+      <div class="card" style="padding:2rem;border-left:3px solid var(--warn);">
+        <h3 style="font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:0.2rem;">Hackathons & CTFs</h3><p style="color:var(--warn);margin-bottom:1.5rem;">Competitive Cybersecurity & Programming</p>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
-          <div style="padding:1.25rem;background:var(--surface2);border-radius:10px;border:1px solid var(--border);">
-            <div style="font-size:1.5rem;margin-bottom:0.75rem;">🚩</div>
-            <h4 style="font-weight:700;color:#fff;margin-bottom:0.4rem;">Capture The Flag (CTF)</h4>
-            <p style="color:var(--muted);font-size:0.85rem;line-height:1.6;">Solved challenges in Web Exploitation, Cryptography, and Digital Forensics under time constraints.</p>
-          </div>
-          <div style="padding:1.25rem;background:var(--surface2);border-radius:10px;border:1px solid var(--border);">
-            <div style="font-size:1.5rem;margin-bottom:0.75rem;">🔒</div>
-            <h4 style="font-weight:700;color:#fff;margin-bottom:0.4rem;">Ignite Hackathon</h4>
-            <p style="color:var(--muted);font-size:0.85rem;line-height:1.6;">Participated in cybersecurity-focused innovation challenges, proposing defense solutions for real-world attack scenarios.</p>
-          </div>
-          <div style="padding:1.25rem;background:var(--surface2);border-radius:10px;border:1px solid var(--border);">
-            <div style="font-size:1.5rem;margin-bottom:0.75rem;">💻</div>
-            <h4 style="font-weight:700;color:#fff;margin-bottom:0.4rem;">Coder's Cup</h4>
-            <p style="color:var(--muted);font-size:0.85rem;line-height:1.6;">Competed in programming challenges testing algorithmic thinking, data structures, and problem-solving speed.</p>
-          </div>
+          <div style="padding:1rem;background:var(--surface2);border-radius:10px;border:1px solid var(--border);"><div style="font-size:1.5rem;margin-bottom:0.5rem;">🚩</div><h4 style="font-weight:700;color:#fff;margin-bottom:0.2rem;">Capture The Flag (CTF)</h4><p style="color:var(--muted);font-size:0.8rem;line-height:1.5;">Web Exploitation, Cryptography, and Digital Forensics.</p></div>
+          <div style="padding:1rem;background:var(--surface2);border-radius:10px;border:1px solid var(--border);"><div style="font-size:1.5rem;margin-bottom:0.5rem;">🔒</div><h4 style="font-weight:700;color:#fff;margin-bottom:0.2rem;">Ignite Hackathon</h4><p style="color:var(--muted);font-size:0.8rem;line-height:1.5;">Cybersecurity innovation challenges and defense solutions.</p></div>
+          <div style="padding:1rem;background:var(--surface2);border-radius:10px;border:1px solid var(--border);"><div style="font-size:1.5rem;margin-bottom:0.5rem;">💻</div><h4 style="font-weight:700;color:#fff;margin-bottom:0.2rem;">Coder's Cup</h4><p style="color:var(--muted);font-size:0.8rem;line-height:1.5;">Algorithmic thinking, data structures, and problem-solving.</p></div>
         </div>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- ══════════════════════════════════ CONTACT ══════════════════════════════════ -->
+<!-- ════════════════ CONTACT ════════════════ -->
 <section id="view-contact" class="section">
   <div class="container">
-    <div style="margin-bottom:3rem;">
+    <div style="margin-bottom:2.5rem;">
       <div class="section-label">// get in touch</div>
       <h2 class="section-title">Contact</h2>
       <p class="section-sub">Open to new opportunities, collaborations, and cybersecurity discussions.</p>
     </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;">
-
-      <!-- Left: info -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start;">
       <div>
-        <p style="color:var(--muted);line-height:1.9;margin-bottom:2rem;font-size:0.95rem;">
-          Whether you're looking for a cybersecurity analyst, want to discuss data security solutions, or have a project in mind — I'd love to hear from you.
-        </p>
-
-        <div style="display:flex;flex-direction:column;gap:1rem;margin-bottom:2rem;">
-          <a href="mailto:Mehtabahmed093@gmail.com" style="display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;background:var(--surface2);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:border-color 0.2s;"
-             onmouseover="this.style.borderColor='rgba(56,189,248,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
-            <div style="width:40px;height:40px;border-radius:8px;background:rgba(56,189,248,0.1);display:flex;align-items:center;justify-content:center;color:var(--accent);flex-shrink:0;"><i class="fas fa-envelope"></i></div>
-            <div>
-              <div style="font-size:0.72rem;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:0.1em;margin-bottom:2px;">EMAIL</div>
-              <div style="color:var(--text);font-size:0.9rem;">Mehtabahmed093@gmail.com</div>
-            </div>
-          </a>
-          <a href="https://www.linkedin.com/in/mehtab-ahmed-202157317/" target="_blank" style="display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;background:var(--surface2);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:border-color 0.2s;"
-             onmouseover="this.style.borderColor='rgba(56,189,248,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
-            <div style="width:40px;height:40px;border-radius:8px;background:rgba(56,189,248,0.1);display:flex;align-items:center;justify-content:center;color:var(--accent);flex-shrink:0;"><i class="fab fa-linkedin"></i></div>
-            <div>
-              <div style="font-size:0.72rem;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:0.1em;margin-bottom:2px;">LINKEDIN</div>
-              <div style="color:var(--text);font-size:0.9rem;">linkedin.com/in/mehtab-ahmed-202157317</div>
-            </div>
-          </a>
-          <a href="https://github.com/MehtabAli093" target="_blank" style="display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;background:var(--surface2);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:border-color 0.2s;"
-             onmouseover="this.style.borderColor='rgba(56,189,248,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
-            <div style="width:40px;height:40px;border-radius:8px;background:rgba(56,189,248,0.1);display:flex;align-items:center;justify-content:center;color:var(--accent);flex-shrink:0;"><i class="fab fa-github"></i></div>
-            <div>
-              <div style="font-size:0.72rem;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:0.1em;margin-bottom:2px;">GITHUB</div>
-              <div style="color:var(--text);font-size:0.9rem;">github.com/MehtabAli093</div>
-            </div>
-          </a>
-          <a href="tel:+923253097611" style="display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;background:var(--surface2);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:border-color 0.2s;"
-             onmouseover="this.style.borderColor='rgba(56,189,248,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
-            <div style="width:40px;height:40px;border-radius:8px;background:rgba(56,189,248,0.1);display:flex;align-items:center;justify-content:center;color:var(--accent);flex-shrink:0;"><i class="fas fa-phone"></i></div>
-            <div>
-              <div style="font-size:0.72rem;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:0.1em;margin-bottom:2px;">PHONE</div>
-              <div style="color:var(--text);font-size:0.9rem;">+92-325-3097611</div>
-            </div>
-          </a>
+        <p style="color:var(--muted);line-height:1.9;margin-bottom:1.5rem;font-size:0.95rem;">Whether you're looking for a cybersecurity analyst, want to discuss data security solutions, or have a project in mind — I'd love to hear from you.</p>
+        <div style="display:flex;flex-direction:column;gap:0.8rem;margin-bottom:1.5rem;">
+          <a href="mailto:Mehtabahmed093@gmail.com" style="display:flex;align-items:center;gap:1rem;padding:0.8rem 1rem;background:var(--surface2);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:border-color 0.2s;"><div style="width:36px;height:36px;border-radius:8px;background:rgba(56,189,248,0.1);display:flex;align-items:center;justify-content:center;color:var(--accent);flex-shrink:0;"><i class="fas fa-envelope"></i></div><div><div style="font-size:0.65rem;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:0.1em;">EMAIL</div><div style="color:var(--text);font-size:0.85rem;">Mehtabahmed093@gmail.com</div></div></a>
+          <a href="https://www.linkedin.com/in/mehtab-ahmed-202157317/" target="_blank" style="display:flex;align-items:center;gap:1rem;padding:0.8rem 1rem;background:var(--surface2);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:border-color 0.2s;"><div style="width:36px;height:36px;border-radius:8px;background:rgba(56,189,248,0.1);display:flex;align-items:center;justify-content:center;color:var(--accent);flex-shrink:0;"><i class="fab fa-linkedin"></i></div><div><div style="font-size:0.65rem;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:0.1em;">LINKEDIN</div><div style="color:var(--text);font-size:0.85rem;">linkedin.com/in/mehtab-ahmed</div></div></a>
+          <a href="https://github.com/MehtabAli093" target="_blank" style="display:flex;align-items:center;gap:1rem;padding:0.8rem 1rem;background:var(--surface2);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:border-color 0.2s;"><div style="width:36px;height:36px;border-radius:8px;background:rgba(56,189,248,0.1);display:flex;align-items:center;justify-content:center;color:var(--accent);flex-shrink:0;"><i class="fab fa-github"></i></div><div><div style="font-size:0.65rem;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:0.1em;">GITHUB</div><div style="color:var(--text);font-size:0.85rem;">github.com/MehtabAli093</div></div></a>
+          <a href="tel:+923253097611" style="display:flex;align-items:center;gap:1rem;padding:0.8rem 1rem;background:var(--surface2);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:border-color 0.2s;"><div style="width:36px;height:36px;border-radius:8px;background:rgba(56,189,248,0.1);display:flex;align-items:center;justify-content:center;color:var(--accent);flex-shrink:0;"><i class="fas fa-phone"></i></div><div><div style="font-size:0.65rem;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:0.1em;">PHONE</div><div style="color:var(--text);font-size:0.85rem;">+92-325-3097611</div></div></a>
         </div>
-
-        <div style="padding:1.25rem;background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.2);border-radius:10px;display:flex;align-items:center;gap:0.75rem;">
-          <div style="width:8px;height:8px;border-radius:50%;background:var(--accent3);flex-shrink:0;animation:blink 1.5s ease infinite;"></div>
-          <span style="font-size:0.85rem;color:var(--muted);">Currently available for new opportunities</span>
-        </div>
+        <div style="padding:1rem;background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.2);border-radius:10px;display:flex;align-items:center;gap:0.6rem;"><div style="width:8px;height:8px;border-radius:50%;background:var(--accent3);flex-shrink:0;animation:blink 1.5s ease infinite;"></div><span style="font-size:0.85rem;color:var(--muted);">Currently available for new opportunities</span></div>
       </div>
-
-      <!-- Right: form -->
-      <div class="card" style="padding:2rem;">
-        <form action="https://formspree.io/f/xblonlkb" method="POST" style="display:flex;flex-direction:column;gap:1.25rem;">
-          <div>
-            <label class="form-label">Name</label>
-            <input type="text" name="name" placeholder="Your full name" required class="form-field">
-          </div>
-          <div>
-            <label class="form-label">Email</label>
-            <input type="email" name="email" placeholder="name@example.com" required class="form-field">
-          </div>
-          <div>
-            <label class="form-label">Subject</label>
-            <input type="text" name="subject" placeholder="What's this about?" class="form-field">
-          </div>
-          <div>
-            <label class="form-label">Message</label>
-            <textarea name="message" rows="5" placeholder="Tell me about your project or opportunity..." required class="form-field" style="resize:vertical;"></textarea>
-          </div>
-          <button type="submit" class="btn-primary" style="justify-content:center;">
-            <i class="fas fa-paper-plane"></i> Send Message
-          </button>
+      <div class="card" style="padding:1.75rem;">
+        <form action="https://formspree.io/f/xblonlkb" method="POST" style="display:flex;flex-direction:column;gap:1rem;">
+          <div><label class="form-label">Name</label><input type="text" name="name" placeholder="Your full name" required class="form-field"></div>
+          <div><label class="form-label">Email</label><input type="email" name="email" placeholder="name@example.com" required class="form-field"></div>
+          <div><label class="form-label">Subject</label><input type="text" name="subject" placeholder="What's this about?" class="form-field"></div>
+          <div><label class="form-label">Message</label><textarea name="message" rows="4" placeholder="Tell me about your project or opportunity..." required class="form-field" style="resize:vertical;"></textarea></div>
+          <button type="submit" class="btn-primary" style="justify-content:center;"><i class="fas fa-paper-plane"></i> Send Message</button>
         </form>
       </div>
     </div>
@@ -1136,60 +643,75 @@ body::after {
 </section>
 
 <script>
-// Vanta
-VANTA.NET({
-  el: "#vanta-bg", mouseControls: true, touchControls: true,
-  gyroControls: false, minHeight: 200, minWidth: 200,
-  color: 0x1e40af, backgroundColor: 0x0b0f19,
-  points: 8, maxDistance: 20, spacing: 20
-});
-
-// Typewriter
-new Typewriter('#typewriter', { loop: true, delay: 70 })
-  .typeString('Data Security Engineer').pauseFor(2200).deleteAll()
-  .typeString('Encryption Specialist').pauseFor(2200).deleteAll()
-  .typeString('SOC Analyst').pauseFor(2200).deleteAll()
-  .typeString('Blockchain Developer').pauseFor(2200).deleteAll()
-  .start();
-
-// Nav switching
-function switchView(id) {
-  window.scrollTo(0,0);
-  document.querySelectorAll('.section').forEach(s => {
-    s.classList.remove('active');
-    s.style.display = 'none';
+  // Vanta
+  VANTA.NET({
+    el: "#vanta-bg",
+    mouseControls: true,
+    touchControls: true,
+    gyroControls: false,
+    minHeight: 200,
+    minWidth: 200,
+    color: 0x1e40af,
+    backgroundColor: 0x0b0f19,
+    points: 8,
+    maxDistance: 20,
+    spacing: 20
   });
-  const target = document.getElementById('view-' + id);
-  if (target) { target.style.display = 'block'; setTimeout(() => target.classList.add('active'), 10); }
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  const nb = document.getElementById('nav-' + id);
-  if (nb) nb.classList.add('active');
 
-  // Animate skill bars when skills view opens
-  if (id === 'skills') {
-    setTimeout(() => {
-      document.querySelectorAll('.skill-fill').forEach(bar => {
-        bar.style.width = bar.dataset.w + '%';
-      });
-    }, 150);
+  // Typewriter
+  new Typewriter('#typewriter', { loop: true, delay: 70 })
+    .typeString('Data Security Engineer').pauseFor(2000).deleteAll()
+    .typeString('Encryption Specialist').pauseFor(2000).deleteAll()
+    .typeString('SOC Analyst').pauseFor(2000).deleteAll()
+    .typeString('Blockchain Developer').pauseFor(2000).deleteAll()
+    .start();
+
+  // Navigation
+  function switchView(id) {
+    window.scrollTo(0,0);
+    document.querySelectorAll('.section').forEach(s => {
+      s.classList.remove('active');
+      s.style.display = 'none';
+    });
+    const target = document.getElementById('view-' + id);
+    if (target) {
+      target.style.display = 'block';
+      setTimeout(() => target.classList.add('active'), 10);
+    }
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    const nb = document.getElementById('nav-' + id);
+    if (nb) nb.classList.add('active');
+
+    if (id === 'skills') {
+      setTimeout(() => {
+        document.querySelectorAll('.skill-fill').forEach(bar => {
+          bar.style.width = bar.dataset.w + '%';
+        });
+      }, 150);
+    }
   }
-}
 
-// Exp tabs
-function showTab(id, btn) {
-  document.querySelectorAll('.exp-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.exp-tab').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + id).classList.add('active');
-  btn.classList.add('active');
-}
+  function showTab(id, btn) {
+    document.querySelectorAll('.exp-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.exp-tab').forEach(b => b.classList.remove('active'));
+    const panel = document.getElementById('tab-' + id);
+    if (panel) panel.classList.add('active');
+    if (btn) btn.classList.add('active');
+  }
 
-// Mobile menu
-function toggleMobile() {
-  document.getElementById('mobile-menu').classList.toggle('hidden');
-}
+  function toggleMobile() {
+    document.getElementById('mobile-menu').classList.toggle('hidden');
+  }
 
-// Init
-document.addEventListener('DOMContentLoaded', () => switchView('home'));
+  // Close mobile menu on window resize to desktop
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+      document.getElementById('mobile-menu').classList.add('hidden');
+    }
+  });
+
+  // Init
+  document.addEventListener('DOMContentLoaded', () => switchView('home'));
 </script>
 </body>
 </html>
