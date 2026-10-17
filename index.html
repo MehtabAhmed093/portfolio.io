@@ -380,9 +380,57 @@
       .mobile-nav-pill .mn-icon { font-size: 16px; }
       .grid-3 { grid-template-columns: 1fr; }
     }
-    @media (prefers-reduced-motion: reduce) {
+        @media (prefers-reduced-motion: reduce) {
       .mobile-nav, .mobile-nav-pill a, .mobile-nav-pill button, .more-popover { animation: none; transition: none; }
     }
+
+    /* =========================================================
+       MOBILE PROJECTS FIX — stacking + aspect ratio
+       ========================================================= */
+    @media (max-width: 900px) {
+      /* 1. Force single column on all card grids */
+      .grid-2, .grid-3 {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* 2. Override inline "grid-column: span 3" on the FYP project card */
+      .card[style*="grid-column:span 3"],
+      .card[style*="grid-column: span 3"],
+      .card[style*="grid-column:span3"] {
+        grid-column: span 1 !important;
+      }
+
+      /* 3. Prevent iOS font auto-inflation */
+      html { -webkit-text-size-adjust: 100%; }
+
+      /* 4. Cards should never overflow the viewport */
+      .card, .deploy-card, .exp-panel, .terminal {
+        max-width: 100%;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+      }
+
+      /* 5. Long badge rows wrap cleanly */
+      .badge {
+        max-width: 100%;
+        white-space: normal;
+      }
+
+      /* 6. Slightly tighter padding for project cards on small screens */
+      #view-projects .card { padding: 1.1rem; }
+
+      /* 7. Ensure images inside project cards don't overflow */
+      #view-projects img { max-width: 100%; height: auto; }
+    }
+
+    @media (max-width: 480px) {
+      /* 8. Very small phones — even tighter */
+      #view-projects .card { padding: 0.9rem; }
+      #view-projects h3 { font-size: 0.9rem !important; }
+    }
+  </style>
+</head>
+<body>
   </style>
 </head>
 <body>
